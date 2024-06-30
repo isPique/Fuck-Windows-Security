@@ -2,7 +2,7 @@
 
 # MALWARE AHEAD! IF YOU DO NOT KNOW WHAT THAT IS, LEAVE.
 
-<img src="https://github.com/isPique/Fuck-Windows-Security/assets/139041426/c5ba97ec-e662-48fd-980d-a694694870cf" width="700">
+<img src="https://github.com/isPique/Fuck-Windows-Security/blob/main/disclaimer.png" width="700">
 
 </div>
 
