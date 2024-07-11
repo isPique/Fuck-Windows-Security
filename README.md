@@ -10,7 +10,7 @@
 
 >***WARNING!! This script was NOT optimized to shorten and obfuscate the code but rather intended to have as much readability as possible for new coders to learn!***
 
-# How does this script work?
+# How does it work?
 
 * Well, if we want to disable Windows's security features, we can use **Registry Editor** for that. However, we will need administrative privileges to access regedit. Like who's gonna run a malware as administrator?
 
