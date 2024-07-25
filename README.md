@@ -30,26 +30,26 @@
   - Since these registry entries doesn’t exist, we can create this structure in the registry to manipulate fodhelper to execute our script with higher privileges bypassing the **User Account Control (UAC)**.
 
 ## Features that the script will disable:
-  ```plaintext
-  - All The Windows Defender Features (including SmartScreen)
-  - Windows Firewall
-  - Windows Update
-  - System Restore
-  - Task Manager
-  - Command Prompt (Cmd)
-  - Remote Desktop
-  - User Account Control (UAC)
-  - Windows Security Center
-  - Windows Error Reporting
-  - Remote Assistance
-  - Windows Update Medic Service
-  - Background Intelligent Transfer Service (BITS)
-  - Windows Script Host
-  - Event Logging
-  - Windows Security Notifications
-  - Windows Search
-  - Automatic Maintenance
-  - Virtualization Based Security
+  ```bash
+  > All The Windows Defender Features (including SmartScreen)
+  > Windows Firewall
+  > Windows Update
+  > System Restore
+  > Task Manager
+  > Command Prompt (Cmd)
+  > Remote Desktop
+  > User Account Control (UAC)
+  > Windows Security Center
+  > Windows Error Reporting
+  > Remote Assistance
+  > Windows Update Medic Service
+  > Background Intelligent Transfer Service (BITS)
+  > Windows Script Host
+  > Event Logging
+  > Windows Security Notifications
+  > Windows Search
+  > Automatic Maintenance
+  > Virtualization Based Security
   ```
 
 ## Self Replication and Self Destruction
