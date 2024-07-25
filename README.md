@@ -1,5 +1,5 @@
 > [!CAUTION]
-> # MALWARE AHEAD! IF YOU DO NOT KNOW WHAT THAT IS, LEAVE.
+> ## MALWARE AHEAD! IF YOU DO NOT KNOW WHAT THAT IS, LEAVE.
 <div align=center>
 
 <img src="https://github.com/isPique/Fuck-Windows-Security/blob/main/disclaimer.png" width="700">
