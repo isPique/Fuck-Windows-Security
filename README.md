@@ -77,7 +77,21 @@ Start-Process cmd.exe -ArgumentList "/c $tempScript" -WindowStyle Hidden
 > [!NOTE]
 > ***The first alternative has been used in the script.***
 
-#
+# How to convert the script into an executable?
+
+**1. Open PowerShell as administrator**
+
+**2. Install [PS2EXE](https://www.advancedinstaller.com/convert-powershell-to-exe)**
+
+  ```powershell
+  Install-Module ps2exe
+  ```
+
+**3. Open the GUI**
+
+  ```powershell
+  win-ps2exe
+  ```
 
 > [!IMPORTANT]
 > #### Once the script has been converted to an .exe file, it can be flagged as:
@@ -85,8 +99,7 @@ Start-Process cmd.exe -ArgumentList "/c $tempScript" -WindowStyle Hidden
 > * [**Trojan:Win32/Bearfoos.A!ml**](https://www.microsoft.com/en-us/wdsi/threats/malware-encyclopedia-description?name=Trojan%3AWin32%2FBearfoos.A!ml&threatid=2147731250)
 > * [**Trojan:Win32/Wacatac.B!ml**](https://www.microsoft.com/en-us/wdsi/threats/malware-encyclopedia-description?name=Trojan%3AWin32%2FWacatac.H!ml&threatid=2147814523)
 
-#
+<hr>
 
 > [!TIP]
-> ### You can use the [PS2EXE](https://www.advancedinstaller.com/convert-powershell-to-exe) tool to convert the script into an executable.
 > ### If you executed the script, you can also run the `Enable.reg` file to repair the damage it caused.
