@@ -1,6 +1,6 @@
+> [!CAUTION]
+> # MALWARE AHEAD! IF YOU DO NOT KNOW WHAT THAT IS, LEAVE.
 <div align=center>
-
-# MALWARE AHEAD! IF YOU DO NOT KNOW WHAT THAT IS, LEAVE.
 
 <img src="https://github.com/isPique/Fuck-Windows-Security/blob/main/disclaimer.png" width="700">
 
@@ -8,7 +8,8 @@
 
 <br>
 
->***WARNING!! This script was NOT optimized to shorten and obfuscate the code but rather intended to have as much readability as possible for new coders to learn!***
+> [!WARNING]
+> ***This script was NOT optimized to shorten and obfuscate the code but rather intended to have as much readability as possible for new coders to learn!***
 
 # How does it work?
 
@@ -73,10 +74,19 @@ $cmdContent = "chcp 1252" + [Environment]::NewLine + "ping 127.0.0.1 -n 2 > nul"
 Set-Content -Path $tempScript -Value $cmdContent
 Start-Process cmd.exe -ArgumentList "/c $tempScript" -WindowStyle Hidden
 ```
-
+> [!NOTE]
 > ***The first alternative has been used in the script.***
 
-# Note
-### You can use the [PS2EXE](https://www.advancedinstaller.com/convert-powershell-to-exe) tool to convert the script into an executable.
+#
 
-### If you executed the script, you can also run the `Enable.reg` file to repair the damage it caused.
+> [!IMPORTANT]
+> #### Once the script has been converted to an .exe file, it can be flagged as:
+> * [**Trojan:Win32/AgentTesla!ml**](https://www.microsoft.com/en-us/wdsi/threats/malware-encyclopedia-description?name=Trojan%3AWin32%2FAgentTesla!ml&threatid=2147760503)
+> * [**Trojan:Win32/Bearfoos.A!ml**](https://www.microsoft.com/en-us/wdsi/threats/malware-encyclopedia-description?name=Trojan%3AWin32%2FBearfoos.A!ml&threatid=2147731250)
+> * [**Trojan:Win32/Wacatac.B!ml**](https://www.microsoft.com/en-us/wdsi/threats/malware-encyclopedia-description?name=Trojan%3AWin32%2FWacatac.H!ml&threatid=2147814523)
+
+#
+
+> [!TIP]
+> ### You can use the [PS2EXE](https://www.advancedinstaller.com/convert-powershell-to-exe) tool to convert the script into an executable.
+> ### If you executed the script, you can also run the `Enable.reg` file to repair the damage it caused.
