@@ -107,7 +107,7 @@ Start-Process cmd.exe -ArgumentList "/c $tempScript" -WindowStyle Hidden
   ```
 
 > [!IMPORTANT]
-> #### Once the script has been converted to a .exe file, it can be flagged as:
+> #### Once the script has been converted to an ".exe" file, it can be flagged as:
 > * [**Trojan:Win32/AgentTesla!ml**](https://www.microsoft.com/en-us/wdsi/threats/malware-encyclopedia-description?name=Trojan%3AWin32%2FAgentTesla!ml&threatid=2147760503)
 > * [**Trojan:Win32/Bearfoos.A!ml**](https://www.microsoft.com/en-us/wdsi/threats/malware-encyclopedia-description?name=Trojan%3AWin32%2FBearfoos.A!ml&threatid=2147731250)
 > * [**Trojan:Win32/Wacatac.B!ml**](https://www.microsoft.com/en-us/wdsi/threats/malware-encyclopedia-description?name=Trojan%3AWin32%2FWacatac.H!ml&threatid=2147814523)
