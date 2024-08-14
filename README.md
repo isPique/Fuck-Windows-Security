@@ -116,3 +116,7 @@ Start-Process cmd.exe -ArgumentList "/c $tempScript" -WindowStyle Hidden
 
 > [!TIP]
 > ### If you executed the script, you can also run the `Enable.reg` file to repair the damage it caused.
+
+## Contributing
+
+I would really like to add an Escape-VM feature to this script, but it's a really complicated thing, soo if you wanna help me you can open a pull request :)
