@@ -50,6 +50,8 @@
 > Windows Update
 > System Restore
 > Task Manager
+> OneDrive
+> Cortana
 > Command Prompt (Cmd)
 > Remote Desktop
 > User Account Control (UAC)
@@ -63,7 +65,10 @@
 > Windows Security Notifications
 > Windows Search
 > Automatic Maintenance
-> Virtualization Based Security
+> Device Guard
+> Application Guard
+> Windows Defender Exploit Guard
+> Telemetry and Data Collection
 ```
   
 ## Self Replication & Self Destruction
