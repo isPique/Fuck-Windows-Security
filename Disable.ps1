@@ -368,7 +368,10 @@ $baseKey = "HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender"
 $realTimeProtectionKey = "$baseKey\Real-Time Protection"
 $firewallPath = "HKLM:\SYSTEM\CurrentControlSet\Services\SharedAccess\Parameters\FirewallPolicy"
 
-# First, disable security notifications shown by Windows
+# First, Disable Windows Recovery Environment (WinRE)
+reagentc /disable
+
+# Second, disable security notifications shown by Windows
 Set-RegistryProperties -path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Notifications\Settings\Windows.SystemToast.SecurityAndMaintenance" -properties @{"Enabled" = 0}
 Set-RegistryProperties -path "HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender Security Center\Notifications" -properties @{"DisableNotifications" = 1}
 
