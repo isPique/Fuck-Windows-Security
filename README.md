@@ -46,6 +46,7 @@
 ## Features that the script will disable:
 ```bash
 > All The Windows Defender Features (including SmartScreen)
+> Windows Recovery Environment (WinRE)
 > Windows Firewall
 > Windows Update
 > System Restore
@@ -121,6 +122,10 @@ Start-Process cmd.exe -ArgumentList "/c $tempScript" -WindowStyle Hidden
 
 > [!TIP]
 > ### If you executed the script, you can also run the `Enable.reg` file to repair the damage it caused.
+> And also open cmd as administrator then run this commmand to enable WinRE:
+```bash
+reagentc /enable
+```
 
 ## Contributing
 
