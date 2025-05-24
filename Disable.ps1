@@ -9,7 +9,7 @@
 # |                                    |     My crime is that of curiosity                         |\__/,|   (`\    |
 # | Socials:                           |      and yea curiosity killed the cat                     |_ _  |.--.) )   |
 # | https://github.com/isPique         |       but satisfaction brought him back                   ( T   )     /    |
-# | https://instagram.com/omrefarukk   |                                                          (((^_(((/(((_/    |
+# | https://instagram.com/omwrswagg    |                                                          (((^_(((/(((_/    |
 # |____________________________________|____________________________________________________________________________|
 
 <#
